@@ -15,15 +15,14 @@
 #include <map>
 #include <iostream>
 #include <memory>
-
 class Circuit {
     public:
         Circuit();
         ~Circuit();
         void addComp(const std::string &name, nts::IComponent *component);
         nts::IComponent *getComp(const std::string &name) const;
-        void display();
-
+        std::map<std::string, std::unique_ptr<nts::IComponent>> *getMap() {return &map;};
+        size_t getTick() const { return tick; };
     protected:
         size_t tick = 0;
         std::map<std::string, std::unique_ptr<nts::IComponent>> map;

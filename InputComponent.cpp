@@ -24,3 +24,13 @@ nts::Tristate nts::InputComponent::compute(std::size_t pin)
         throw std::invalid_argument("Pin doesn't exist");
     return value;
 }
+
+nts::Tristate nts::InputComponent::getValue() const
+{
+    return value;
+}
+
+void nts::InputComponent::setValue(nts::Tristate new_value)
+{
+    value = new_value;
+}

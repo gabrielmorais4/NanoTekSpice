@@ -16,9 +16,11 @@ namespace nts
             InputComponent();
             ~InputComponent();
             nts::Tristate compute(std::size_t pin);
-            nts::Tristate value;
+            void setValue(nts::Tristate value);
+            nts::Tristate getValue() const;
         protected:
         private:
+            nts::Tristate value;
     };
 }
 

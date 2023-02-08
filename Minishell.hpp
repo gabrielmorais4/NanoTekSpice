@@ -7,11 +7,19 @@
 
 #pragma once
 
+#include <iostream>
+#include <string>
+#include "Circuit.hpp"
 class Minishell {
     public:
         Minishell();
         ~Minishell();
-
+        void getCommands(Circuit &myCircuit);
+        void assignCommand(const std::string &name, const std::string &value, Circuit &myCircuit);
+        void display(Circuit &myCircuit);
     protected:
     private:
 };
+std::string extractName(std::string const &value);
+std::string extractValue(const std::string &value);
+

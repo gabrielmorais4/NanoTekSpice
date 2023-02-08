@@ -13,11 +13,13 @@
 #include "NotComponent.hpp"
 #include "OutputComponent.hpp"
 #include "ClockComponent.hpp"
+#include "Minishell.hpp"
 #include <memory>
 
 int main ( void )
 {
     Circuit circuit;
+    Minishell minishell;
     // circuit.addComp("output", new nts::OutputComponent());
     // circuit.addComp("true", new nts::TrueComponent());
     // circuit.addComp("true2", new nts::TrueComponent());
@@ -29,9 +31,10 @@ int main ( void )
     circuit.addComp("clock", new nts::ClockComponent());
     circuit.addComp("output", new nts::OutputComponent());
     circuit.getComp("clock")->setLink(1, *circuit.getComp("output"), 1);
-    circuit.display();
+    minishell.display(circuit);
+    minishell.getCommands(circuit);
     // circuit.getComp("clock")->compute(1);
     // circuit.getComp("clock")->compute(1);
     // circuit.getComp("clock")->compute(1);
-    circuit.display();
+
 }
