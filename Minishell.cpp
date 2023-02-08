@@ -100,7 +100,7 @@ void Minishell::simulate(Circuit &myCircuit)
     }
     for(auto &it : *myCircuit.getMap()) {
         nts::ClockComponent *clock = dynamic_cast<nts::ClockComponent *>(myCircuit.getComp(it.first));
-        if (clock) {
+        if (clock && mapAssign.find(it.first) == mapAssign.end()) {
             clock->simulate(myCircuit.getTick());
         }
     }
