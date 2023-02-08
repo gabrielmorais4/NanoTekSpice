@@ -18,8 +18,9 @@ nts::InputComponent::~InputComponent()
 {
 }
 
-nts :: Tristate nts::InputComponent::compute (std :: size_t pin)
+nts::Tristate nts::InputComponent::compute(std::size_t pin)
 {
-    std::cout << pin << std::endl;
+    if (pin != 1)
+        throw std::invalid_argument("Pin doesn't exist");
     return value;
 }

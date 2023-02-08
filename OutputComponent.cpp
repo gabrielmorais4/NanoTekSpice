@@ -17,7 +17,9 @@ nts::OutputComponent::~OutputComponent()
 {
 }
 
-nts::Tristate nts::OutputComponent::compute(std :: size_t pin)
+nts::Tristate nts::OutputComponent::compute(std::size_t pin)
 {
-    return pins[pin- 1].component->compute(pins[pin - 1].other_pin);
+    if (pin != 1)
+        throw std::invalid_argument("Pin doesn't exist");
+    return pins[0].component->compute(pins[0].other_pin);
 }

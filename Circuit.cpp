@@ -15,15 +15,19 @@ Circuit::~Circuit()
 {
 }
 
-void Circuit::addComp(const std::string &name, nts::IComponent &comp)
+void Circuit::addComp(const std::string &name, const nts::IComponent *component)
 {
-    map.insert({name, std::unique_ptr<nts::IComponent>(std::make_unique<nts::IComponent>(comp))});
+    map[name] = std::make_unique<nts::IComponent>(component);
 }
 
-nts::IComponent &Circuit::getComp(const std::string &name) const
+nts::IComponent *Circuit::getComp(const std::string &name) const
 {
-    //if we have problems check it later
-    return *map.at(name);
+    return map.at(name).get();
+}
+
+std::map<std::string, std::unique_ptr<nts::IComponent>> &Circuit::getMap()
+{
+    return map;
 }
 
 void Circuit::display()
@@ -31,7 +35,16 @@ void Circuit::display()
     std::cout << "tick: " << tick << std::endl;
     std::cout << "input(s):" << std::endl;
     for (auto it = map.begin(); it != map.end(); it++){
-        nts::InputComponent *_lemon = dynamic_cast<InputComponent *>(fruits[i]);
-        if (it->second)
-    } // we need to only display firstly the int then input then output 
+        nts::InputComponent *component = dynamic_cast<nts::InputComponent *>(it->second.get());
+        if (component) {
+            std::cout << it->first << ": " << component->compute(1) << std::endl;
+        }
+    }
+    std::cout << "output(s):" << std::endl;
+    for (auto it = map.begin(); it != map.end(); it++){
+        nts::OutputComponent *component = dynamic_cast<nts::OutputComponent *>(it->second.get());
+        if (component) {
+            std::cout << it->first << ": " << component->compute(1) << std::endl;
+        }
+    }
 }

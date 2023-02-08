@@ -22,7 +22,7 @@ namespace nts
             AComponent(){};
             ~AComponent(){};
             virtual nts :: Tristate compute (std :: size_t pin) = 0;
-            void simulate(std::size_t tick){if(tick);};
+            void simulate(std::size_t tick){ tick++; };
             void setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin);
             nts::IComponent *getPinConnexion(std::size_t index);
         protected:

@@ -7,9 +7,12 @@
 
 #pragma once
 
-#include <map>
 #include "IComponent.hpp"
+#include "OutputComponent.hpp"
 #include "InputComponent.hpp"
+#include "TrueComponent.hpp"
+#include "FalseComponent.hpp"
+#include <map>
 #include <iostream>
 #include <memory>
 
@@ -17,9 +20,9 @@ class Circuit {
     public:
         Circuit();
         ~Circuit();
-        void addComp(const std::string &name, nts::IComponent &comp);
-        nts::IComponent &getComp(const std::string &name) const;
-        std::map<std::string, std::unique_ptr<nts::IComponent>> getMap() {return map;};
+        void Circuit::addComp(const std::string &name, const nts::IComponent *component);
+        nts::IComponent *Circuit::getComp(const std::string &name) const;
+        std::map<std::string, std::unique_ptr<nts::IComponent>> &getMap();
         void display();
 
     protected:

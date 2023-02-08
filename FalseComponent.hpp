@@ -20,9 +20,10 @@ namespace nts
             };
             ~FalseComponent() = default;
             nts::Tristate compute(std::size_t pin)
-            { 
-                if (pin)
-                    return False;
+            {
+                if (pin != 1)
+                    throw std::invalid_argument("Pin doesn't exist");
+                return False;
             };
 
         protected:
