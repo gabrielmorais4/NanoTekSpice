@@ -10,6 +10,7 @@
 #include <iostream>
 #include <string>
 #include "Circuit.hpp"
+#include <algorithm>
 class Minishell {
     public:
         Minishell();
