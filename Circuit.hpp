@@ -20,9 +20,8 @@ class Circuit {
     public:
         Circuit();
         ~Circuit();
-        void Circuit::addComp(const std::string &name, const nts::IComponent *component);
-        nts::IComponent *Circuit::getComp(const std::string &name) const;
-        std::map<std::string, std::unique_ptr<nts::IComponent>> &getMap();
+        void addComp(const std::string &name, nts::IComponent *component);
+        nts::IComponent *getComp(const std::string &name) const;
         void display();
 
     protected:

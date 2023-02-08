@@ -16,7 +16,7 @@ namespace nts
             OutputComponent();
             ~OutputComponent();
             nts :: Tristate compute(std :: size_t pin);
-        
+            nts::Tristate value;
         protected:
         private:
     };

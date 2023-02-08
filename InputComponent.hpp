@@ -15,9 +15,9 @@ namespace nts
         public:
             InputComponent();
             ~InputComponent();
-            nts::Tristate compute (std::size_t pin);
-        protected:
+            nts::Tristate compute(std::size_t pin);
             nts::Tristate value;
+        protected:
         private:
     };
 }

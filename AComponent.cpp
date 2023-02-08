@@ -9,16 +9,19 @@
 
 void nts::AComponent::setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin)
 {
-        nts::node newnode = nts::node{&other,otherPin};
-        pins.at(pin - 1) = newnode;
-        if (other.getPinConnexion(otherPin) != nullptr)
+        pins[pin - 1].component = &other;
+        pins[pin - 1].other_pin = otherPin;
+        if (other.getPinConnexion(otherPin) == nullptr) {
             other.setLink(otherPin, *this, pin);
+        }
 }
 
 
-nts::IComponent *nts::AComponent::getPinConnexion(std::size_t index) {
-    if (index >= pins.size()) {
+nts::IComponent *nts::AComponent::getPinConnexion(std::size_t index)
+{
+    if (index - 1 >= pins.size()) {
+        std::cout << "Pin doesn't exist" << std::endl;
         return nullptr;
     }
-    return pins.at(index).component;
+    return pins.at(index - 1).component;
 }

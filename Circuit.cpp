@@ -15,19 +15,15 @@ Circuit::~Circuit()
 {
 }
 
-void Circuit::addComp(const std::string &name, const nts::IComponent *component)
+void Circuit::addComp(const std::string &name, nts::IComponent *component)
 {
-    map[name] = std::make_unique<nts::IComponent>(component);
+    map[name].reset(component);
 }
+
 
 nts::IComponent *Circuit::getComp(const std::string &name) const
 {
     return map.at(name).get();
-}
-
-std::map<std::string, std::unique_ptr<nts::IComponent>> &Circuit::getMap()
-{
-    return map;
 }
 
 void Circuit::display()
@@ -37,14 +33,21 @@ void Circuit::display()
     for (auto it = map.begin(); it != map.end(); it++){
         nts::InputComponent *component = dynamic_cast<nts::InputComponent *>(it->second.get());
         if (component) {
-            std::cout << it->first << ": " << component->compute(1) << std::endl;
+            if (component->value == nts::Undefined)
+                std::cout << it->first << ": " << "U" << std::endl;
+            else
+                std::cout << it->first << ": " << component->value << std::endl;
         }
     }
     std::cout << "output(s):" << std::endl;
     for (auto it = map.begin(); it != map.end(); it++){
         nts::OutputComponent *component = dynamic_cast<nts::OutputComponent *>(it->second.get());
         if (component) {
-            std::cout << it->first << ": " << component->compute(1) << std::endl;
+            nts::Tristate val = component->compute(1);
+            if (val == nts::Undefined)
+                std::cout << it->first << ": " << "U" << std::endl;
+            else
+                std::cout << it->first << ": " << val << std::endl;
         }
     }
 }
