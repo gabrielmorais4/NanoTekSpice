@@ -26,3 +26,13 @@ nts::Tristate nts::OutputComponent::compute(std::size_t pin)
         return Undefined;
     return pins[0].component->compute(pins[0].other_pin);
 }
+
+void nts::OutputComponent::setValue(nts::Tristate new_value)
+{
+    value = new_value;
+}
+
+nts::Tristate nts::OutputComponent::getValue() const
+{
+    return value;
+}

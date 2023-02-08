@@ -20,11 +20,17 @@ nts::Tristate nts::ClockComponent::compute(std::size_t pin)
 {
     if (pin != 1)
         throw std::invalid_argument("Pin doesn't exist");
-    // if (getValue() == Undefined)
-    //     setValue(Undefined);
-    // else if (getValue() == False)
-    //     setValue(True);
-    // else if (getValue() == True)
-    //     setValue(False); // for later baby
     return getValue();
+}
+
+void nts::ClockComponent::simulate(std::size_t tick)
+{
+    //change this later
+    (void)tick;
+    if (getValue() == Undefined)
+        setValue(Undefined);
+    else if (getValue() == False)
+        setValue(True);
+    else if (getValue() == True)
+        setValue(False);
 }

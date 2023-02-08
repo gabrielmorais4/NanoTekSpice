@@ -25,5 +25,3 @@ nts::IComponent *Circuit::getComp(const std::string &name) const
 {
     return map.at(name).get();
 }
-
-

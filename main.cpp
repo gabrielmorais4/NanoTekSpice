@@ -20,21 +20,12 @@ int main ( void )
 {
     Circuit circuit;
     Minishell minishell;
-    // circuit.addComp("output", new nts::OutputComponent());
-    // circuit.addComp("true", new nts::TrueComponent());
-    // circuit.addComp("true2", new nts::TrueComponent());
-    // circuit.addComp("and", new nts::AndComponent());
-    // circuit.addComp("not", new nts::NotComponent());
-    // circuit.getComp("true")->setLink(1, *circuit.getComp("and"), 1);
-    // circuit.getComp("true2")->setLink(1, *circuit.getComp("and"), 2);
-    // circuit.getComp("and")->setLink(3, *circuit.getComp("not"), 1);
-    circuit.addComp("clock", new nts::ClockComponent());
     circuit.addComp("output", new nts::OutputComponent());
-    circuit.getComp("clock")->setLink(1, *circuit.getComp("output"), 1);
-    minishell.display(circuit);
+    circuit.addComp("clock", new nts::ClockComponent());
+    circuit.addComp("and", new nts::AndComponent());
+    circuit.addComp("input", new nts::InputComponent());
+    circuit.getComp("clock")->setLink(1, *circuit.getComp("and"), 1);
+    circuit.getComp("input")->setLink(1, *circuit.getComp("and"), 2);
+    circuit.getComp("and")->setLink(3, *circuit.getComp("output"), 1);
     minishell.getCommands(circuit);
-    // circuit.getComp("clock")->compute(1);
-    // circuit.getComp("clock")->compute(1);
-    // circuit.getComp("clock")->compute(1);
-
 }
