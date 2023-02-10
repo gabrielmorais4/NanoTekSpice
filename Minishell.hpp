@@ -11,6 +11,8 @@
 #include <string>
 #include "Circuit.hpp"
 #include <algorithm>
+#include <thread>
+#include <signal.h>
 
 class Minishell {
     public:
@@ -20,6 +22,8 @@ class Minishell {
         void assignCommand(const std::string &name, const std::string &value, Circuit &myCircuit);
         void display(Circuit &myCircuit);
         void simulate(Circuit &myCircuit);
+        void loop(Circuit &myCircuit);
+
     protected:
     private:
         std::map<std::string, nts::Tristate> mapAssign;
