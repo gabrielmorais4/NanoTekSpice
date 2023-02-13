@@ -11,6 +11,9 @@
 #include <string>
 #include "Circuit.hpp"
 #include <algorithm>
+#include <thread>
+#include <signal.h>
+
 class Minishell {
     public:
         Minishell();
@@ -18,9 +21,14 @@ class Minishell {
         void getCommands(Circuit &myCircuit);
         void assignCommand(const std::string &name, const std::string &value, Circuit &myCircuit);
         void display(Circuit &myCircuit);
+        void simulate(Circuit &myCircuit);
+        void loop(Circuit &myCircuit);
+
     protected:
     private:
+        std::map<std::string, nts::Tristate> mapAssign;
 };
+
 std::string extractName(std::string const &value);
 std::string extractValue(const std::string &value);
 

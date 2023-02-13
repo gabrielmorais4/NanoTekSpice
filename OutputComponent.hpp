@@ -15,9 +15,11 @@ namespace nts
         public:
             OutputComponent();
             ~OutputComponent();
-            nts :: Tristate compute(std :: size_t pin);
-            nts::Tristate value;
+            nts::Tristate compute(std::size_t pin);
+            void setValue(nts::Tristate new_value);
+            nts::Tristate getValue() const;
         protected:
         private:
+            nts::Tristate value;
     };
 }

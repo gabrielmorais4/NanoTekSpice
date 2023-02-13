@@ -7,6 +7,8 @@
 
 #include "Minishell.hpp"
 
+bool signal_received;
+
 Minishell::Minishell()
 {
 }
@@ -18,16 +20,43 @@ Minishell::~Minishell()
 void Minishell::getCommands(Circuit &myCircuit)
 {
     std::string line;
-    while (std::getline(std::cin, line)) {
+    while (!std::cin.eof()) {
+        std::cout << "> ";
+        std::getline(std::cin, line);
         if (line == "exit")
             break;
         if (line == "display")
             display(myCircuit);
-        if (line.find('=') != std::string::npos) {
+        if (line == "simulate")
+            simulate(myCircuit);
+        if (line == "loop")
+            loop(myCircuit);
+        if (line.find('=') != std::string::npos)
             assignCommand(extractName(line), extractValue(line), myCircuit);
-        } else
-            std::cout << line << std::endl;
     }
+}
+
+void signal_callback_handler(int i, siginfo_t *sig, void *s)
+{
+    (void)i;
+    (void)sig;
+    (void)s;
+    signal_received = true;
+}
+
+void Minishell::loop(Circuit &myCircuit)
+{
+    struct sigaction signal;
+    signal.sa_sigaction = signal_callback_handler;
+    signal.sa_flags = SA_SIGINFO;
+    signal_received = false;
+    sigaction(SIGINT, &signal, NULL);
+    while (!signal_received) {
+        simulate(myCircuit);
+        display(myCircuit);
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    }
+    std::cout << std::endl;
 }
 
 void Minishell::assignCommand(const std::string &name, const std::string &value, Circuit &myCircuit)
@@ -40,18 +69,11 @@ void Minishell::assignCommand(const std::string &name, const std::string &value,
         std::cout << "WRONG VALUE" << std::endl;
         return;
     }
-    nts::IComponent *comp = myCircuit.getComp(name);
-    nts::InputComponent *component = dynamic_cast<nts::InputComponent *>(comp);
-    if (component) {
-        int valueNb = std::stoi(value);
-        if (valueNb == nts::True)
-            component->setValue(nts::True);
-        if (valueNb == nts::False)
-            component->setValue(nts::False);
-        if (valueNb == nts::Undefined)
-            component->setValue(nts::Undefined);
+    if (myCircuit.getComp(name) == nullptr) {
+        std::cout << "WRONG VALUE" << std::endl;
+        return;
     }
-
+    mapAssign.insert({name, (nts::Tristate)std::stoi(value)});
 }
 
 std::string extractName(std::string const &value)
@@ -77,9 +99,9 @@ void Minishell::display(Circuit &myCircuit)
         nts::InputComponent *component = dynamic_cast<nts::InputComponent *>(it->second.get());
         if (component) {
             if (component->getValue() == nts::Undefined)
-                std::cout << it->first << ": " << "U" << std::endl;
+                std::cout << "\t" << it->first << ": " << "U" << std::endl;
             else
-                std::cout << it->first << ": " << component->getValue() << std::endl;
+                std::cout << "\t" << it->first << ": " << component->getValue() << std::endl;
         }
     }
     std::cout << "output(s):" << std::endl;
@@ -88,9 +110,27 @@ void Minishell::display(Circuit &myCircuit)
         if (component) {
             nts::Tristate val = component->compute(1);
             if (val == nts::Undefined)
-                std::cout << it->first << ": " << "U" << std::endl;
+                std::cout << "\t" << it->first << ": " << "U" << std::endl;
             else
-                std::cout << it->first << ": " << val << std::endl;
+                std::cout << "\t" << it->first << ": " << val << std::endl;
         }
     }
+}
+
+void Minishell::simulate(Circuit &myCircuit)
+{
+    for (auto &it : mapAssign){
+        nts::InputComponent *component = dynamic_cast<nts::InputComponent *>(myCircuit.getComp(it.first));
+        if (component) {
+           component->setValue(it.second);
+        }
+    }
+    for(auto &it : *myCircuit.getMap()) {
+        nts::ClockComponent *clock = dynamic_cast<nts::ClockComponent *>(myCircuit.getComp(it.first));
+        if (clock && mapAssign.find(it.first) == mapAssign.end()) {
+            clock->simulate(myCircuit.getTick());
+        }
+    }
+    mapAssign.clear();
+    myCircuit.setTick(myCircuit.getTick() + 1);
 }
