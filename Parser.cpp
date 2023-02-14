@@ -9,6 +9,7 @@
 
 Parser::Parser(const std::string &file)
 {
+    try {
     std::ifstream myfile (file);
     std::string line;
     bool isChipsets = true;
@@ -32,11 +33,18 @@ Parser::Parser(const std::string &file)
             fullstring += val;
         }
         if (fullstring[0] != '#' && !fullstring.empty()) {
-            if (isChipsets)
+            if (isChipsets) {
+                if (checkIfValueExists(chipsets, fullstring)) {
+                    exit (84);
+                }
                 chipsets.insert(chipsets.end(), fullstring);
+            }
             else
                 links.insert(links.end(), fullstring);
         }
+    }
+    } catch (std::exception &e) {
+        exit (84);
     }
     functs.insert({"and", [](){ return std::make_unique<nts::AndComponent>(); }});
     functs.insert({"not", [](){ return std::make_unique<nts::NotComponent>(); }});
@@ -47,7 +55,15 @@ Parser::Parser(const std::string &file)
     functs.insert({"input", [](){ return std::make_unique<nts::InputComponent>(); }});
     functs.insert({"false", [](){ return std::make_unique<nts::FalseComponent>(); }});
     functs.insert({"true", [](){ return std::make_unique<nts::TrueComponent>(); }});
+}
 
+int checkIfValueExists(auto vector, std::string val)
+{
+    for (auto it : vector) {
+        if (it == val)
+            return 1;
+    }
+    return 0;
 }
 
 Parser::~Parser()
@@ -60,7 +76,11 @@ void Parser::addChipsetsToCircuit(Circuit &circuit)
         std::stringstream ss(it);
         std::string type, name;
         ss >> type >> name;
-       circuit.addComp(name, functs[type]());
+        try {
+            circuit.addComp(name, functs[type]());
+        } catch (std::exception &e) {
+                exit (84);
+        }
     }
 }
 
@@ -78,7 +98,11 @@ void Parser::addLinksToCircuit(Circuit &circuit)
         pos = second.find(':');
         secondName = second.substr(0, pos);
         secondPin = second.substr(pos + 1);
+        try {
         circuit.getComp(firstName)->setLink(std::stoi(firstPin), *circuit.getComp(secondName), std::stoi(secondPin));
+        } catch (std::exception &e) {
+            exit (84);
+        }
     }
 }
 
