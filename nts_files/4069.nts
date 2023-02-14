@@ -1,0 +1,20 @@
+.chipsets:
+not not1
+not not2
+not not3
+not not4
+not not5
+not not6
+.links:
+not1:1 circuit:1
+circuit:2 not1:2
+not2:1 circuit:3
+circuit:4 not2:2
+not3:1 circuit:5
+circuit:6 not3:2
+not4:1 circuit:9
+circuit:8 not4:2
+not5:1 circuit:11
+circuit:10 not5:2
+not6:1 circuit:13
+circuit:12 not6:2

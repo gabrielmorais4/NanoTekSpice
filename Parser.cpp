@@ -94,3 +94,59 @@ void Parser::showFile () const
         std::cout << it << std::endl;
     }
 }
+
+nts::IComponent *Parser::create4069() const
+{
+    Circuit *circuit = new Circuit(14);
+    Parser myParser("./nts_files/4069.nts");
+    myParser.addChipsetsToCircuit(*circuit);
+    //link
+    return circuit;
+}
+
+nts::IComponent *Parser::create4001() const
+{
+    Circuit *circuit = new Circuit(14);
+    Parser myParser("./nts_files/4001.nts");
+    myParser.addChipsetsToCircuit(*circuit);
+    //link
+    return circuit;
+}
+
+nts::IComponent *Parser::create4011() const
+{
+    Circuit *circuit = new Circuit(14);
+    Parser myParser("./nts_files/4011.nts");
+    myParser.addChipsetsToCircuit(*circuit);
+    //link
+    return circuit;
+}
+
+nts::IComponent *Parser::create4030() const
+{
+    Circuit *circuit = new Circuit(14);
+    Parser myParser("./nts_files/4030.nts");
+    myParser.addChipsetsToCircuit(*circuit);
+    //link
+    return circuit;
+}
+
+nts::IComponent *Parser::create4071() const
+{
+    Circuit *circuit = new Circuit(14);
+    Parser myParser("./nts_files/4071.nts");
+    myParser.addChipsetsToCircuit(*circuit);
+    //link
+    return circuit;
+}
+
+nts::IComponent *Parser::create4081() const
+{
+    Circuit *circuit = new Circuit(14);
+    Parser myParser("./nts_files/4081.nts");
+    myParser.addChipsetsToCircuit(*circuit);
+    // circuit->getComp("and1")->setLink(1, *circuit, 1);
+    // circuit->getComp("and1")->setLink(2, *circuit, 2);
+    // circuit->setLink(3, *circuit->getComp("and1"), 3);
+    return circuit;
+}

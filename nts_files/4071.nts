@@ -6,13 +6,13 @@ or or4
 .links:
 or1:1 circuit:1
 or1:2 circuit:2
-or1:3 circuit:3
+circuit:3 or1:3
 or2:1 circuit:5
 or2:2 circuit:6
-or2:3 circuit:4
+circuit:4 or2:3
 or3:1 circuit:8
 or3:2 circuit:9
-or3:3 circuit:10
+circuit:10 or3:3
 or4:1 circuit:12
 or4:2 circuit:13
-or4:3 circuit:11
+circuit:11 or4:3

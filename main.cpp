@@ -7,59 +7,11 @@
 
 #include <iostream>
 #include "Circuit.hpp"
-
 #include "Minishell.hpp"
 #include <memory>
 #include <fstream>
 #include <string>
 #include "Parser.hpp"
-
-nts::IComponent *create4001()
-{
-    Circuit *circuit = new Circuit(14);
-    Parser myParser("./nts_files/4001.nts");
-    myParser.addChipsetsToCircuit(*circuit);
-    //link
-    return circuit;
-}
-
-nts::IComponent *create4011()
-{
-    Circuit *circuit = new Circuit(14);
-    Parser myParser("./nts_files/4011.nts");
-    myParser.addChipsetsToCircuit(*circuit);
-    //link
-    return circuit;
-}
-
-nts::IComponent *create4031()
-{
-    Circuit *circuit = new Circuit(14);
-    Parser myParser("./nts_files/4030.nts");
-    myParser.addChipsetsToCircuit(*circuit);
-    //link
-    return circuit;
-}
-
-nts::IComponent *create4071()
-{
-    Circuit *circuit = new Circuit(14);
-    Parser myParser("./nts_files/4071.nts");
-    myParser.addChipsetsToCircuit(*circuit);
-    //link
-    return circuit;
-}
-
-nts::IComponent *create4081()
-{
-    Circuit *circuit = new Circuit(14);
-    Parser myParser("./nts_files/4081.nts");
-    myParser.addChipsetsToCircuit(*circuit);
-    // circuit->getComp("and1")->setLink(1, *circuit, 1);
-    // circuit->getComp("and1")->setLink(2, *circuit, 2);
-    // circuit->setLink(3, *circuit->getComp("and1"), 3);
-    return circuit;
-}
 
 int main (int ac, char **av)
 {
