@@ -60,7 +60,6 @@ void Parser::addChipsetsToCircuit(Circuit &circuit)
         std::stringstream ss(it);
         std::string type, name;
         ss >> type >> name;
-        std::cout << type << std::endl;
        circuit.addComp(name, functs[type]());
     }
 }

@@ -11,7 +11,7 @@
 
 namespace nts
 {
-    class FalseComponent : public nts::InputComponent {
+    class FalseComponent : public AComponent {
         public:
             FalseComponent()
             {
