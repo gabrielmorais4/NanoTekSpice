@@ -73,6 +73,10 @@ void Minishell::assignCommand(const std::string &name, const std::string &value,
         std::cout << "WRONG VALUE" << std::endl;
         return;
     }
+    if (std::stoi(value) != 0 && std::stoi(value) != 1) {
+        std::cout << "WRONG VALUE" << std::endl;
+        return;
+    }
     mapAssign.insert({name, (nts::Tristate)std::stoi(value)});
 }
 
@@ -80,7 +84,7 @@ std::string extractName(std::string const &value)
 {
     std::string::size_type pos = value.find('=');
     if (pos != std::string::npos) {
-        return value.substr(0,pos);
+        return value.substr(0, pos);
     } else {
         return value;
     }

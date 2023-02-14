@@ -7,8 +7,10 @@
 
 #include "Circuit.hpp"
 
-Circuit::Circuit()
+Circuit::Circuit(size_t pins)
 {
+    std::vector<nts::node> list(pins);
+    this->pins = list;
 }
 
 Circuit::~Circuit()
@@ -20,8 +22,12 @@ void Circuit::addComp(const std::string &name, std::unique_ptr<nts::IComponent> 
     map[name].swap(component);;
 }
 
-
 nts::IComponent *Circuit::getComp(const std::string &name) const
 {
     return map.at(name).get();
+}
+
+nts::Tristate Circuit::compute(std::size_t pin)
+{
+    return pins[pin - 1].component->compute(pins[pin - 1].other_pin);
 }

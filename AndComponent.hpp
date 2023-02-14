@@ -15,7 +15,7 @@ namespace nts
         public:
             AndComponent();
             ~AndComponent();
-            nts :: Tristate compute (std :: size_t pin);
+            nts::Tristate compute(std::size_t pin);
         protected:
         private:
     };

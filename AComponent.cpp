@@ -16,6 +16,12 @@ void nts::AComponent::setLink(std::size_t pin, nts::IComponent &other, std::size
         }
 }
 
+void nts::AComponent::setUnidirectionalLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin)
+{
+    pins[pin - 1].component = &other;
+    pins[pin - 1].other_pin = otherPin;
+}
+
 
 nts::IComponent *nts::AComponent::getPinConnexion(std::size_t index)
 {

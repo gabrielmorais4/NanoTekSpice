@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "IComponent.hpp"
+#include "AComponent.hpp"
 #include "OutputComponent.hpp"
 #include "InputComponent.hpp"
 #include "TrueComponent.hpp"
@@ -16,15 +16,17 @@
 #include <map>
 #include <iostream>
 #include <memory>
-class Circuit {
+
+class Circuit : public nts::AComponent {
     public:
-        Circuit();
+        Circuit(size_t pins = 0);
         ~Circuit();
         void addComp(const std::string &name, std::unique_ptr<nts::IComponent> component);
         nts::IComponent *getComp(const std::string &name) const;
         std::map<std::string, std::unique_ptr<nts::IComponent>> *getMap() {return &map;};
         size_t getTick() const { return tick; };
         void setTick(size_t new_tick) { tick = new_tick; };
+        nts::Tristate compute(std::size_t pin);
 
     protected:
         size_t tick = 0;

@@ -24,11 +24,13 @@ namespace nts
             virtual nts::Tristate compute(std::size_t pin) = 0;
             virtual void simulate(std::size_t tick)
             {
-                //change this later
-                tick = tick + 1;
+                (void)tick;
             };
             void setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin);
+            void setUnidirectionalLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin);
             nts::IComponent *getPinConnexion(std::size_t index);
+
+
         protected:
             std::vector<nts::node> pins;
         private:
