@@ -1,0 +1,18 @@
+.chipsets:
+and and1
+and and2
+and and3
+and and4
+.links:
+and1:1 circuit:1
+and1:2 circuit:2
+and1:3 circuit:3
+and2:1 circuit:5
+and2:2 circuit:6
+and2:3 circuit:4
+and3:1 circuit:8
+and3:2 circuit:9
+and3:3 circuit:10
+and4:1 circuit:12
+and4:2 circuit:13
+and4:3 circuit:11
