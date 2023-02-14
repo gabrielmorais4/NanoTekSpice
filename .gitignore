@@ -1,3 +1,4 @@
 .vscode
 nanotekspice
 nts_single/
+*.nts

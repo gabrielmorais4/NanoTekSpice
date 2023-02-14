@@ -7,26 +7,29 @@
 
 #include <iostream>
 #include "Circuit.hpp"
-#include "AndComponent.hpp"
-#include "FalseComponent.hpp"
-#include "TrueComponent.hpp"
-#include "NotComponent.hpp"
-#include "OutputComponent.hpp"
-#include "ClockComponent.hpp"
-#include "Minishell.hpp"
-#include "OrComponent.hpp"
-#include <memory>
 
-int main ( void )
+#include "Minishell.hpp"
+#include <memory>
+#include <fstream>
+#include <string>
+#include "Parser.hpp"
+
+int main (int ac, char **av)
 {
+    if (ac != 2)
+        return 84;
+    std::ifstream myfile (av[1]);
+    if (myfile.is_open() == false)
+        return 84;
+    myfile.close();
+    Parser myParser(av[1]);
+    myParser.showFile();
     Circuit circuit;
     Minishell minishell;
-    circuit.addComp("output", new nts::OutputComponent());
-    circuit.addComp("clock", new nts::ClockComponent());
-    circuit.addComp("or", new nts::OrComponent());
-    circuit.addComp("input", new nts::InputComponent());
-    circuit.getComp("clock")->setLink(1, *circuit.getComp("or"), 1);
-    circuit.getComp("input")->setLink(1, *circuit.getComp("or"), 2);
-    circuit.getComp("or")->setLink(3, *circuit.getComp("output"), 1);
+    // myParser.addChipsetsToCircuit(circuit);
+    myParser.addChipsetsToCircuit(circuit);
+    myParser.addLinksToCircuit(circuit);
     minishell.getCommands(circuit);
+
+    return 0;
 }

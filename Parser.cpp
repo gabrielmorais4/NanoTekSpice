@@ -38,10 +38,49 @@ Parser::Parser(const std::string &file)
                 links.insert(links.end(), fullstring);
         }
     }
+    functs.insert({"and", [](){ return std::make_unique<nts::AndComponent>(); }});
+    functs.insert({"not", [](){ return std::make_unique<nts::NotComponent>(); }});
+    functs.insert({"output", [](){ return std::make_unique<nts::OutputComponent>(); }});
+    functs.insert({"clock", [](){ return std::make_unique<nts::ClockComponent>(); }});
+    functs.insert({"or", [](){ return std::make_unique<nts::OrComponent>(); }});
+    functs.insert({"xor", [](){ return std::make_unique<nts::OrComponent>(); }});
+    functs.insert({"input", [](){ return std::make_unique<nts::InputComponent>(); }});
+    functs.insert({"false", [](){ return std::make_unique<nts::FalseComponent>(); }});
+    functs.insert({"true", [](){ return std::make_unique<nts::TrueComponent>(); }});
+
 }
 
 Parser::~Parser()
 {
+}
+
+void Parser::addChipsetsToCircuit(Circuit &circuit)
+{
+    for (auto it : chipsets) {
+        std::stringstream ss(it);
+        std::string type, name;
+        ss >> type >> name;
+        std::cout << type << std::endl;
+       circuit.addComp(name, functs[type]());
+    }
+}
+
+void Parser::addLinksToCircuit(Circuit &circuit)
+{
+    for (auto it : links) {
+        std::stringstream ss(it);
+        std::string first, second;
+        ss >> first >> second;
+        std::string firstName, firstPin, secondName, secondPin;
+        size_t pos;
+        pos = first.find(':');
+        firstName = first.substr(0, pos);
+        firstPin = first.substr(pos + 1);
+        pos = second.find(':');
+        secondName = second.substr(0, pos);
+        secondPin = second.substr(pos + 1);
+        circuit.getComp(firstName)->setLink(std::stoi(firstPin), *circuit.getComp(secondName), std::stoi(secondPin));
+    }
 }
 
 void Parser::showFile () const

@@ -20,7 +20,7 @@ class Circuit {
     public:
         Circuit();
         ~Circuit();
-        void addComp(const std::string &name, nts::IComponent *component);
+        void addComp(const std::string &name, std::unique_ptr<nts::IComponent> component);
         nts::IComponent *getComp(const std::string &name) const;
         std::map<std::string, std::unique_ptr<nts::IComponent>> *getMap() {return &map;};
         size_t getTick() const { return tick; };

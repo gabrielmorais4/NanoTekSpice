@@ -15,9 +15,9 @@ Circuit::~Circuit()
 {
 }
 
-void Circuit::addComp(const std::string &name, nts::IComponent *component)
+void Circuit::addComp(const std::string &name, std::unique_ptr<nts::IComponent> component)
 {
-    map[name].reset(component);
+    map[name].swap(component);;
 }
 
 
