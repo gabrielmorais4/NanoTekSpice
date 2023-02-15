@@ -55,6 +55,13 @@ Parser::Parser(const std::string &file)
     functs.insert({"input", [](){ return std::make_unique<nts::InputComponent>(); }});
     functs.insert({"false", [](){ return std::make_unique<nts::FalseComponent>(); }});
     functs.insert({"true", [](){ return std::make_unique<nts::TrueComponent>(); }});
+ //   functs.insert({"4069", [](){ return create4069(); }});
+   // functs.insert({"4001", [](){ return create4001(); }});
+    //functs.insert({"4011", [](){ return create4011(); }});
+    //functs.insert({"4030", [](){ return create4030(); }});
+    //functs.insert({"4071", [](){ return create4071(); }});
+    //functs.insert({"4081", [](){ return create4081(); }});
+
     if (chipsets.empty() || links.empty())
         exit(84);
 }
@@ -120,58 +127,93 @@ void Parser::showFile () const
     }
 }
 
-nts::IComponent *Parser::create4069() const
+void Parser::addLinksToCircuitCustom(Circuit &circuit)
 {
-    Circuit *circuit = new Circuit(14);
+    for (auto it : links) {
+        std::stringstream ss(it);
+        std::string first, second;
+        ss >> first >> second;
+        std::string firstName, firstPin, secondName, secondPin;
+        size_t pos;
+        pos = first.find(':');
+        firstName = first.substr(0, pos);
+        firstPin = first.substr(pos + 1);
+        pos = second.find(':');
+        secondName = second.substr(0, pos);
+        secondPin = second.substr(pos + 1);
+        try {
+            if (firstName == "circuit" && secondName != "circuit") {
+                std::cout << firstPin << " circuit linked to  " << secondName << " " << secondPin << std::endl;
+
+                circuit.setLink(std::stoi(firstPin), *circuit.getComp(secondName), std::stoi(secondPin));
+            }
+            if (firstName != "circuit" && secondName == "circuit") {
+                std::cout << firstName << "linked to circuit " << secondPin << std::endl;
+
+                circuit.getComp(firstName)->setLink(std::stoi(firstPin), circuit, std::stoi(secondPin));
+            }
+            if (firstName == "circuit" && secondName == "circuit") {
+                circuit.setLink(std::stoi(firstPin), circuit, std::stoi(secondPin));
+            }
+            if (firstName != "circuit" && secondName != "circuit") {
+                circuit.getComp(firstName)->setLink(std::stoi(firstPin), *circuit.getComp(secondName), std::stoi(secondPin));
+            }
+        } catch (std::exception &e) {
+            exit (84);
+        }
+    }
+}
+
+std::unique_ptr<nts::IComponent> create4069()
+{
+    std::unique_ptr<Circuit> circuit(new Circuit(14));
     Parser myParser("./nts_files/4069.nts");
     myParser.addChipsetsToCircuit(*circuit);
-    //link
-    return circuit;
+    myParser.addLinksToCircuitCustom(*circuit);
+    return std::unique_ptr<nts::IComponent>(std::move(circuit));
 }
 
-nts::IComponent *Parser::create4001() const
+std::unique_ptr<nts::IComponent> create4001()
 {
-    Circuit *circuit = new Circuit(14);
+    std::unique_ptr<Circuit> circuit(new Circuit(14));
     Parser myParser("./nts_files/4001.nts");
     myParser.addChipsetsToCircuit(*circuit);
-    //link
-    return circuit;
+    myParser.addLinksToCircuitCustom(*circuit);
+    return std::unique_ptr<nts::IComponent>(std::move(circuit));
 }
 
-nts::IComponent *Parser::create4011() const
+std::unique_ptr<nts::IComponent> create4011()
 {
-    Circuit *circuit = new Circuit(14);
+    std::unique_ptr<Circuit> circuit(new Circuit(14));
     Parser myParser("./nts_files/4011.nts");
     myParser.addChipsetsToCircuit(*circuit);
-    //link
-    return circuit;
+    myParser.addLinksToCircuitCustom(*circuit);
+    return std::unique_ptr<nts::IComponent>(std::move(circuit));
 }
 
-nts::IComponent *Parser::create4030() const
+std::unique_ptr<nts::IComponent> create4030()
 {
-    Circuit *circuit = new Circuit(14);
+    std::unique_ptr<Circuit> circuit(new Circuit(14));
     Parser myParser("./nts_files/4030.nts");
     myParser.addChipsetsToCircuit(*circuit);
-    //link
-    return circuit;
+    myParser.addLinksToCircuitCustom(*circuit);
+    return std::unique_ptr<nts::IComponent>(std::move(circuit));
 }
 
-nts::IComponent *Parser::create4071() const
+std::unique_ptr<nts::IComponent> create4071()
 {
-    Circuit *circuit = new Circuit(14);
+    std::unique_ptr<Circuit> circuit(new Circuit(14));
     Parser myParser("./nts_files/4071.nts");
     myParser.addChipsetsToCircuit(*circuit);
-    //link
-    return circuit;
+    myParser.addLinksToCircuitCustom(*circuit);
+    return std::unique_ptr<nts::IComponent>(std::move(circuit));
 }
 
-nts::IComponent *Parser::create4081() const
+std::unique_ptr<nts::IComponent> create4081()
 {
-    Circuit *circuit = new Circuit(14);
+    std::unique_ptr<Circuit> circuit(new Circuit(14));
     Parser myParser("./nts_files/4081.nts");
     myParser.addChipsetsToCircuit(*circuit);
-    // circuit->getComp("and1")->setLink(1, *circuit, 1);
-    // circuit->getComp("and1")->setLink(2, *circuit, 2);
-    // circuit->setLink(3, *circuit->getComp("and1"), 3);
-    return circuit;
+    myParser.addLinksToCircuitCustom(*circuit);
+    return std::unique_ptr<nts::IComponent>(std::move(circuit));
 }

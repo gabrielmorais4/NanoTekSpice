@@ -22,7 +22,7 @@ int main (int ac, char **av)
         return 84;
     myfile.close();
     Parser myParser(av[1]);
-    // myParser.showFile();
+   // myParser.showFile();
     Circuit circuit;
     Minishell minishell;
     myParser.addChipsetsToCircuit(circuit);

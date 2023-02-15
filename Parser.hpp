@@ -33,13 +33,7 @@ class Parser {
         void addChipsetsToCircuit(Circuit &circuit);
         void addLinksToCircuit(Circuit &circuit);
         std::map<std::string, std::function<std::unique_ptr<nts::IComponent>()>> functs;
-        nts::IComponent *create4069() const;
-        nts::IComponent *create4071() const;
-        nts::IComponent *create4081() const;
-        nts::IComponent *create4001() const;
-        nts::IComponent *create4011() const;
-        nts::IComponent *create4030() const;
-
+        void addLinksToCircuitCustom(Circuit &circuit);
 
     protected:
     private:
@@ -47,5 +41,11 @@ class Parser {
         std::vector<std::string> links;
 };
 int checkIfValueExists(auto vector, std::string val);
+std::unique_ptr<nts::IComponent> create4069();
+std::unique_ptr<nts::IComponent> create4001();
+std::unique_ptr<nts::IComponent> create4011();
+std::unique_ptr<nts::IComponent> create4030();
+std::unique_ptr<nts::IComponent> create4071();
+std::unique_ptr<nts::IComponent> create4081();
 
 #endif /* !PARSER_HPP_ */
