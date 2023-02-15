@@ -107,9 +107,9 @@ void Minishell::display(Circuit &myCircuit)
         nts::InputComponent *component = dynamic_cast<nts::InputComponent *>(it->second.get());
         if (component) {
             if (component->getValue() == nts::Undefined)
-                std::cout << " " << it->first << ": " << "U" << std::endl;
+                std::cout << "  " << it->first << ": " << "U" << std::endl;
             else
-                std::cout << " " << it->first << ": " << component->getValue() << std::endl;
+                std::cout << "  " << it->first << ": " << component->getValue() << std::endl;
         }
     }
     std::cout << "output(s):" << std::endl;
@@ -118,9 +118,9 @@ void Minishell::display(Circuit &myCircuit)
         if (component) {
             nts::Tristate val = component->compute(1);
             if (val == nts::Undefined)
-                std::cout << "\t" << it->first << ": " << "U" << std::endl;
+                std::cout << "  " << it->first << ": " << "U" << std::endl;
             else
-                std::cout << "\t" << it->first << ": " << val << std::endl;
+                std::cout << "  " << it->first << ": " << val << std::endl;
         }
     }
 }
