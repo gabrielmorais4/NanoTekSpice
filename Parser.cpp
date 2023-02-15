@@ -14,14 +14,6 @@ Parser::Parser(const std::string &file)
     std::string line;
     bool isChipsets = true;
     while (std::getline(myfile, line)) {
-        if (line == ".links:") {
-            isChipsets = false;
-            continue;
-        }
-        if (line == ".chipsets:") {
-            isChipsets = true;
-            continue;
-        }
         std::istringstream iss(line);
         std::string val;
         std::string fullstring;
@@ -31,6 +23,14 @@ Parser::Parser(const std::string &file)
                 continue;
             fullstring += " ";
             fullstring += val;
+        }
+        if (fullstring == ".links:") {
+            isChipsets = false;
+            continue;
+        }
+        if (fullstring == ".chipsets:") {
+            isChipsets = true;
+            continue;
         }
         if (fullstring[0] != '#' && !fullstring.empty()) {
             if (isChipsets) {

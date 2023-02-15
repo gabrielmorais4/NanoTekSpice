@@ -13,7 +13,7 @@
 #include <algorithm>
 #include <thread>
 #include <signal.h>
-
+#include <string.h>
 class Minishell {
     public:
         Minishell();
