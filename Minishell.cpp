@@ -47,6 +47,7 @@ void signal_callback_handler(int i, siginfo_t *sig, void *s)
 void Minishell::loop(Circuit &myCircuit)
 {
     struct sigaction signal;
+    memset(&signal, 0, sizeof(signal));
     signal.sa_sigaction = signal_callback_handler;
     signal.sa_flags = SA_SIGINFO;
     signal_received = false;

@@ -24,7 +24,12 @@ void Circuit::addComp(const std::string &name, std::unique_ptr<nts::IComponent> 
 
 nts::IComponent *Circuit::getComp(const std::string &name) const
 {
-    return map.at(name).get();
+    try {
+        auto res = map.at(name).get();
+        return res;
+    } catch (std::exception &e) {
+        exit (84);
+    }
 }
 
 nts::Tristate Circuit::compute(std::size_t pin)

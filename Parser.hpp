@@ -46,5 +46,6 @@ class Parser {
         std::vector<std::string> chipsets;
         std::vector<std::string> links;
 };
+int checkIfValueExists(auto vector, std::string val);
 
 #endif /* !PARSER_HPP_ */
