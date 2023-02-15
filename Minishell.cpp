@@ -74,7 +74,7 @@ void Minishell::assignCommand(const std::string &name, const std::string &value,
         std::cout << "WRONG VALUE" << std::endl;
         return;
     }
-    if (std::stoi(value) != nts::False && std::stoi(value) != nts::True && std::stoi(value) != nts::Undefined) {
+    if (std::stoi(value) != nts::False && std::stoi(value) != nts::True && std::stoi(value) != -1) {
         std::cout << "WRONG VALUE" << std::endl;
         return;
     }
