@@ -62,8 +62,8 @@ void Minishell::loop(Circuit &myCircuit)
 
 void Minishell::assignCommand(const std::string &name, const std::string &value, Circuit &myCircuit)
 {
-    if (value.empty() || !std::all_of(value.begin(), value.end(), ::isdigit)) {
-        std::cout << "WRONG VALUE" << std::endl;
+    if (value.empty() || (!std::all_of(value.begin(), value.end(), ::isdigit) && value != std::string("U"))) {
+        std::cout << "WRONG VALUE !!" << std::endl;
         return;
     }
     if (name.empty()) {
@@ -74,11 +74,14 @@ void Minishell::assignCommand(const std::string &name, const std::string &value,
         std::cout << "WRONG VALUE" << std::endl;
         return;
     }
-    if (std::stoi(value) != nts::False && std::stoi(value) != nts::True && std::stoi(value) != -1) {
+    if (value != "U" && std::stoi(value) != nts::False && std::stoi(value) != nts::True) {
         std::cout << "WRONG VALUE" << std::endl;
         return;
     }
-    mapAssign.insert({name, (nts::Tristate)std::stoi(value)});
+    if (value == "U") {
+        mapAssign.insert({name, (nts::Tristate::Undefined)});
+    } else
+        mapAssign.insert({name, (nts::Tristate)std::stoi(value)});
 }
 
 std::string extractName(std::string const &value)
