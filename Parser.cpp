@@ -55,6 +55,8 @@ Parser::Parser(const std::string &file)
     functs.insert({"input", [](){ return std::make_unique<nts::InputComponent>(); }});
     functs.insert({"false", [](){ return std::make_unique<nts::FalseComponent>(); }});
     functs.insert({"true", [](){ return std::make_unique<nts::TrueComponent>(); }});
+    if (chipsets.empty() || links.empty())
+        exit(84);
 }
 
 int checkIfValueExists(auto vector, std::string val)
