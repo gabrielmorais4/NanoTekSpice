@@ -73,7 +73,7 @@ void Minishell::assignCommand(const std::string &name, const std::string &value,
         std::cout << "WRONG VALUE" << std::endl;
         return;
     }
-    if (std::stoi(value) != 0 && std::stoi(value) != 1) {
+    if (std::stoi(value) != nts::False && std::stoi(value) != nts::True && std::stoi(value) != nts::Undefined) {
         std::cout << "WRONG VALUE" << std::endl;
         return;
     }
@@ -103,9 +103,9 @@ void Minishell::display(Circuit &myCircuit)
         nts::InputComponent *component = dynamic_cast<nts::InputComponent *>(it->second.get());
         if (component) {
             if (component->getValue() == nts::Undefined)
-                std::cout << "\t" << it->first << ": " << "U" << std::endl;
+                std::cout << " " << it->first << ": " << "U" << std::endl;
             else
-                std::cout << "\t" << it->first << ": " << component->getValue() << std::endl;
+                std::cout << " " << it->first << ": " << component->getValue() << std::endl;
         }
     }
     std::cout << "output(s):" << std::endl;
