@@ -10,17 +10,17 @@ not not4
 .links:
 or1:1 circuit:1
 or1:2 circuit:2
-or1:3 not1:1
+not1:1 or1:3
 circuit:3 not1:2
 or2:1 circuit:5
 or2:2 circuit:6
-or2:3 not1:1
+not2:1 or2:3
 circuit:4 not2:2
 or3:1 circuit:8
 or3:2 circuit:9
-or3:3 not1:1
+not3:1 or3:3
 circuit:10 not3:2
 or4:1 circuit:12
 or4:2 circuit:13
-or4:3 not1:1
+not4:1 or4:3
 circuit:11 not1:2
