@@ -55,12 +55,12 @@ Parser::Parser(const std::string &file)
     functs.insert({"input", [](){ return std::make_unique<nts::InputComponent>(); }});
     functs.insert({"false", [](){ return std::make_unique<nts::FalseComponent>(); }});
     functs.insert({"true", [](){ return std::make_unique<nts::TrueComponent>(); }});
- //   functs.insert({"4069", [](){ return create4069(); }});
-   // functs.insert({"4001", [](){ return create4001(); }});
-    //functs.insert({"4011", [](){ return create4011(); }});
-    //functs.insert({"4030", [](){ return create4030(); }});
-    //functs.insert({"4071", [](){ return create4071(); }});
-    //functs.insert({"4081", [](){ return create4081(); }});
+    functs.insert({"4069", [](){ return create4069(); }});
+    functs.insert({"4001", [](){ return create4001(); }});
+    functs.insert({"4011", [](){ return create4011(); }});
+    functs.insert({"4030", [](){ return create4030(); }});
+    functs.insert({"4071", [](){ return create4071(); }});
+    functs.insert({"4081", [](){ return create4081(); }});
 
     if (chipsets.empty() || links.empty())
         exit(84);
@@ -143,20 +143,16 @@ void Parser::addLinksToCircuitCustom(Circuit &circuit)
         secondPin = second.substr(pos + 1);
         try {
             if (firstName == "circuit" && secondName != "circuit") {
-                std::cout << firstPin << " circuit linked to  " << secondName << " " << secondPin << std::endl;
-
-                circuit.setLink(std::stoi(firstPin), *circuit.getComp(secondName), std::stoi(secondPin));
+                circuit.setUnidirectionalLink(std::stoi(firstPin), *circuit.getComp(secondName), std::stoi(secondPin));
             }
             if (firstName != "circuit" && secondName == "circuit") {
-                std::cout << firstName << "linked to circuit " << secondPin << std::endl;
-
-                circuit.getComp(firstName)->setLink(std::stoi(firstPin), circuit, std::stoi(secondPin));
+                circuit.getComp(firstName)->setUnidirectionalLink(std::stoi(firstPin), circuit, std::stoi(secondPin));
             }
             if (firstName == "circuit" && secondName == "circuit") {
-                circuit.setLink(std::stoi(firstPin), circuit, std::stoi(secondPin));
+                circuit.setUnidirectionalLink(std::stoi(firstPin), circuit, std::stoi(secondPin));
             }
             if (firstName != "circuit" && secondName != "circuit") {
-                circuit.getComp(firstName)->setLink(std::stoi(firstPin), *circuit.getComp(secondName), std::stoi(secondPin));
+                circuit.getComp(firstName)->setUnidirectionalLink(std::stoi(firstPin), *circuit.getComp(secondName), std::stoi(secondPin));
             }
         } catch (std::exception &e) {
             exit (84);
