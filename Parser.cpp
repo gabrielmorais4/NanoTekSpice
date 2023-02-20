@@ -12,7 +12,7 @@ Parser::Parser(const std::string &file)
     try {
     std::ifstream myfile (file);
     std::string line;
-    bool isChipsets = true;
+    int isChipsets = -1;
     while (std::getline(myfile, line)) {
         int pos = line.find('#');
         line = line.substr(0, pos);
@@ -28,25 +28,25 @@ Parser::Parser(const std::string &file)
         }
         if (fullstring[0] != '#' && !fullstring.empty()) {
             if (fullstring == ".links:") {
-                isChipsets = false;
+                isChipsets = 0;
                 continue;
             }
             if (fullstring == ".chipsets:") {
-                isChipsets = true;
+                isChipsets = 1;
                 continue;
             }
-            if (isChipsets) {
+            if (isChipsets == 1) {
                 if (checkIfValueExists(chipsets, fullstring)) {
-                    exit (12);
+                    exit (84);
                 }
                 chipsets.insert(chipsets.end(), fullstring);
             }
-            else
+            else if (isChipsets == 0)
                 links.insert(links.end(), fullstring);
         }
     }
     } catch (std::exception &e) {
-        exit (13);
+        exit (84);
     }
     functs.insert({"and", [](){ return std::make_unique<nts::AndComponent>(); }});
     functs.insert({"not", [](){ return std::make_unique<nts::NotComponent>(); }});
@@ -65,7 +65,7 @@ Parser::Parser(const std::string &file)
     functs.insert({"4081", [](){ return create4081(); }});
 
     if (chipsets.empty() || links.empty())
-        exit(11);
+        exit(84);
 }
 
 int checkIfValueExists(auto vector, std::string val)
@@ -90,7 +90,7 @@ void Parser::addChipsetsToCircuit(Circuit &circuit)
         try {
             circuit.addComp(name, functs[type]());
         } catch (std::exception &e) {
-                exit (16);
+                exit (84);
         }
     }
 }
@@ -112,7 +112,7 @@ void Parser::addLinksToCircuit(Circuit &circuit)
         try {
         circuit.getComp(firstName)->setLink(std::stoi(firstPin), *circuit.getComp(secondName), std::stoi(secondPin));
         } catch (std::exception &e) {
-            exit (17);
+            exit (84);
         }
     }
 }
@@ -157,7 +157,7 @@ void Parser::addLinksToCircuitCustom(Circuit &circuit)
                 circuit.getComp(firstName)->setUnidirectionalLink(std::stoi(firstPin), *circuit.getComp(secondName), std::stoi(secondPin));
             }
         } catch (std::exception &e) {
-            exit (18);
+            exit (84);
         }
     }
 }
