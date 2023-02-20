@@ -23,4 +23,4 @@ circuit:10 not3:2
 or4:1 circuit:12
 or4:2 circuit:13
 not4:1 or4:3
-circuit:11 not1:2
+circuit:11 not4:2
