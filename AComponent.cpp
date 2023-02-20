@@ -9,8 +9,10 @@
 
 void nts::AComponent::setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin)
 {
-        pins[pin - 1].component = &other;
-        pins[pin - 1].other_pin = otherPin;
+        if (this->getPinConnexion(pin) == nullptr) {
+            pins[pin - 1].component = &other;
+            pins[pin - 1].other_pin = otherPin;
+        }
         if (other.getPinConnexion(otherPin) == nullptr) {
             other.setLink(otherPin, *this, pin);
         }
@@ -21,7 +23,6 @@ void nts::AComponent::setUnidirectionalLink(std::size_t pin, nts::IComponent &ot
     pins[pin - 1].component = &other;
     pins[pin - 1].other_pin = otherPin;
 }
-
 
 nts::IComponent *nts::AComponent::getPinConnexion(std::size_t index)
 {

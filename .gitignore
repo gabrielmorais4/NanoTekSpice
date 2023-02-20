@@ -1,4 +1,5 @@
 .vscode
 nanotekspice
 nts_single/
+nts_advanced/
 test.nts
