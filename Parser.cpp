@@ -14,6 +14,8 @@ Parser::Parser(const std::string &file)
     std::string line;
     bool isChipsets = true;
     while (std::getline(myfile, line)) {
+        int pos = line.find('#');
+        line = line.substr(0, pos);
         std::istringstream iss(line);
         std::string val;
         std::string fullstring;
@@ -24,18 +26,18 @@ Parser::Parser(const std::string &file)
             fullstring += " ";
             fullstring += val;
         }
-        if (fullstring == ".links:") {
-            isChipsets = false;
-            continue;
-        }
-        if (fullstring == ".chipsets:") {
-            isChipsets = true;
-            continue;
-        }
         if (fullstring[0] != '#' && !fullstring.empty()) {
+            if (fullstring == ".links:") {
+                isChipsets = false;
+                continue;
+            }
+            if (fullstring == ".chipsets:") {
+                isChipsets = true;
+                continue;
+            }
             if (isChipsets) {
                 if (checkIfValueExists(chipsets, fullstring)) {
-                    exit (84);
+                    exit (12);
                 }
                 chipsets.insert(chipsets.end(), fullstring);
             }
@@ -44,14 +46,14 @@ Parser::Parser(const std::string &file)
         }
     }
     } catch (std::exception &e) {
-        exit (84);
+        exit (13);
     }
     functs.insert({"and", [](){ return std::make_unique<nts::AndComponent>(); }});
     functs.insert({"not", [](){ return std::make_unique<nts::NotComponent>(); }});
     functs.insert({"output", [](){ return std::make_unique<nts::OutputComponent>(); }});
     functs.insert({"clock", [](){ return std::make_unique<nts::ClockComponent>(); }});
     functs.insert({"or", [](){ return std::make_unique<nts::OrComponent>(); }});
-    functs.insert({"xor", [](){ return std::make_unique<nts::OrComponent>(); }});
+    functs.insert({"xor", [](){ return std::make_unique<nts::XorComponent>(); }});
     functs.insert({"input", [](){ return std::make_unique<nts::InputComponent>(); }});
     functs.insert({"false", [](){ return std::make_unique<nts::FalseComponent>(); }});
     functs.insert({"true", [](){ return std::make_unique<nts::TrueComponent>(); }});
@@ -63,7 +65,7 @@ Parser::Parser(const std::string &file)
     functs.insert({"4081", [](){ return create4081(); }});
 
     if (chipsets.empty() || links.empty())
-        exit(84);
+        exit(11);
 }
 
 int checkIfValueExists(auto vector, std::string val)
@@ -88,7 +90,7 @@ void Parser::addChipsetsToCircuit(Circuit &circuit)
         try {
             circuit.addComp(name, functs[type]());
         } catch (std::exception &e) {
-                exit (84);
+                exit (16);
         }
     }
 }
@@ -110,7 +112,7 @@ void Parser::addLinksToCircuit(Circuit &circuit)
         try {
         circuit.getComp(firstName)->setLink(std::stoi(firstPin), *circuit.getComp(secondName), std::stoi(secondPin));
         } catch (std::exception &e) {
-            exit (84);
+            exit (17);
         }
     }
 }
@@ -155,7 +157,7 @@ void Parser::addLinksToCircuitCustom(Circuit &circuit)
                 circuit.getComp(firstName)->setUnidirectionalLink(std::stoi(firstPin), *circuit.getComp(secondName), std::stoi(secondPin));
             }
         } catch (std::exception &e) {
-            exit (84);
+            exit (18);
         }
     }
 }
