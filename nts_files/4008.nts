@@ -9,18 +9,18 @@ sum1:2 circuit:1
 sum1:3 sum2:4
 circuit:14 sum1:4
 circuit:13 sum1:5
+
 sum2:1 circuit:2
 sum2:2 circuit:3
 sum2:3 sum3:4
-sum1:3 sum2:4
 circuit:12 sum2:5
+
 sum3:1 circuit:4
 sum3:2 circuit:5
 sum3:3 sum4:4
-sum2:3 sum3:4
 circuit:11 sum3:5
+
 sum4:1 circuit:6
 sum4:2 circuit:7
 sum4:3 circuit:9
-sum2:3 sum4:4
 circuit:10 sum4:5

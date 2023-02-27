@@ -33,7 +33,6 @@ nts::Tristate nts::SumComponent::compute(std::size_t pin)
         } else {
             return False;
         }
-
     } else {
         if (val1 == True && val2 == True && val3 == True) {
             return True;
