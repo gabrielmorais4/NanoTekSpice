@@ -57,12 +57,14 @@ Parser::Parser(const std::string &file)
     functs.insert({"input", [](){ return std::make_unique<nts::InputComponent>(); }});
     functs.insert({"false", [](){ return std::make_unique<nts::FalseComponent>(); }});
     functs.insert({"true", [](){ return std::make_unique<nts::TrueComponent>(); }});
+    functs.insert({"sum", [](){ return std::make_unique<nts::SumComponent>(); }});
     functs.insert({"4069", [](){ return create4069(); }});
     functs.insert({"4001", [](){ return create4001(); }});
     functs.insert({"4011", [](){ return create4011(); }});
     functs.insert({"4030", [](){ return create4030(); }});
     functs.insert({"4071", [](){ return create4071(); }});
     functs.insert({"4081", [](){ return create4081(); }});
+    functs.insert({"4008", [](){ return create4008(); }});
 
     if (chipsets.empty() || links.empty())
         exit(84);
@@ -211,6 +213,15 @@ std::unique_ptr<nts::IComponent> create4081()
 {
     std::unique_ptr<Circuit> circuit(new Circuit(14));
     Parser myParser("./nts_files/4081.nts");
+    myParser.addChipsetsToCircuit(*circuit);
+    myParser.addLinksToCircuitCustom(*circuit);
+    return std::unique_ptr<nts::IComponent>(std::move(circuit));
+}
+
+std::unique_ptr<nts::IComponent> create4008()
+{
+    std::unique_ptr<Circuit> circuit(new Circuit(16));
+    Parser myParser("./nts_files/4008.nts");
     myParser.addChipsetsToCircuit(*circuit);
     myParser.addLinksToCircuitCustom(*circuit);
     return std::unique_ptr<nts::IComponent>(std::move(circuit));
