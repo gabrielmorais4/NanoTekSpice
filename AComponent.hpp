@@ -29,6 +29,10 @@ namespace nts
             void setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin);
             void setUnidirectionalLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin);
             nts::IComponent *getPinConnexion(std::size_t index);
+            void setVisited(bool visited)
+            {
+                this->visited = visited;
+            };
 
 
         protected:

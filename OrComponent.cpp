@@ -15,12 +15,10 @@ nts::OrComponent::OrComponent()
 
 nts::Tristate nts::OrComponent::compute(std::size_t pin)
 {
-    if (visited && pin == 3) {
-        visited = false;
-        return (last_state);
-    }
+    // if (visited && pin == 3) {
+    //     return (last_state);
+    // }
     if (pin == 1 || pin == 2) {
-        visited = false;
         return pins[pin - 1].component->compute(pins[pin - 1].other_pin);
     }
     visited = true;

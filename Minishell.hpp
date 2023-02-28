@@ -23,6 +23,7 @@ class Minishell {
         void display(Circuit &myCircuit);
         void simulate(Circuit &myCircuit);
         void loop(Circuit &myCircuit);
+        void reinitVisited(Circuit &myCircuit);
 
     protected:
     private:

@@ -25,5 +25,6 @@ namespace nts
             virtual void setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin) = 0;
             virtual void setUnidirectionalLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin) = 0;
             virtual nts::IComponent *getPinConnexion(std::size_t index) = 0;
+            virtual void setVisited(bool visited) = 0;
     };
 }

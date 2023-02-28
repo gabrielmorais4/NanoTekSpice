@@ -99,6 +99,14 @@ std::string extractValue(const std::string &value)
     return value.substr(value.find('=') + 1);
 }
 
+void Minishell::reinitVisited(Circuit &myCircuit)
+{
+    for (auto it = myCircuit.getMap()->begin(); it != myCircuit.getMap()->end(); it++){
+        std::cout << it->first << std::endl;
+        it->second->setVisited(false);
+    }
+}
+
 void Minishell::display(Circuit &myCircuit)
 {
     std::cout << "tick: " << myCircuit.getTick() << std::endl;
@@ -123,6 +131,7 @@ void Minishell::display(Circuit &myCircuit)
                 std::cout << "  " << it->first << ": " << val << std::endl;
         }
     }
+    // reinitVisited(myCircuit);
 }
 
 void Minishell::simulate(Circuit &myCircuit)
