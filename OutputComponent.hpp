@@ -18,6 +18,7 @@ namespace nts
             nts::Tristate compute(std::size_t pin);
             void setValue(nts::Tristate new_value);
             nts::Tristate getValue() const;
+            void reset(std::size_t pin);
         protected:
         private:
             nts::Tristate value;

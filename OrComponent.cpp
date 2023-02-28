@@ -13,11 +13,24 @@ nts::OrComponent::OrComponent()
     pins = list;
 }
 
+void nts::OrComponent::reset(std::size_t pin)
+{
+    if (visited == false && pin == 3) {
+        return;;
+    }
+    visited = false;
+    if (pin == 1 || pin == 2) {
+        pins[pin - 1].component->reset(pins[pin - 1].other_pin);
+    }
+    pins[0].component->reset(pins[0].other_pin);
+    pins[1].component->reset(pins[1].other_pin);
+}
+
 nts::Tristate nts::OrComponent::compute(std::size_t pin)
 {
-    // if (visited && pin == 3) {
-    //     return (last_state);
-    // }
+    if (visited && pin == 3) {
+        return (last_state);
+    }
     if (pin == 1 || pin == 2) {
         return pins[pin - 1].component->compute(pins[pin - 1].other_pin);
     }

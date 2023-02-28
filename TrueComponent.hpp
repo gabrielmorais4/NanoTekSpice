@@ -25,6 +25,12 @@ namespace nts
                     throw std::invalid_argument("Pin doesn't exist");
                 return True;
             };
+            void reset(std::size_t pin)
+            {
+                if (pin != 1)
+                    throw std::invalid_argument("Pin doesn't exist");
+                visited = false;
+            };
 
         protected:
         private:

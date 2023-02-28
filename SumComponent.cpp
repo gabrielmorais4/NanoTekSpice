@@ -17,6 +17,17 @@ nts::SumComponent::~SumComponent()
 {
 }
 
+void nts::SumComponent::reset(std::size_t pin)
+{
+    visited = false;
+    if (pin == 1 || pin == 2 || pin == 3) {
+        pins[pin - 1].component->reset(pins[pin - 1].other_pin);
+    }
+    pins[0].component->reset(pins[0].other_pin);
+    pins[1].component->reset(pins[1].other_pin);
+    pins[2].component->reset(pins[2].other_pin);
+}
+
 nts::Tristate nts::SumComponent::compute(std::size_t pin)
 {
     if (pin == 1 || pin == 2 || pin == 3) {

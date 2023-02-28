@@ -18,6 +18,17 @@ nts::OutputComponent::~OutputComponent()
 {
 }
 
+void nts::OutputComponent::reset(std::size_t pin)
+{
+    if (pin != 1)
+        throw std::invalid_argument("Pin doesn't exist");
+    visited = false;
+    if (pins[0].component == nullptr) {
+        return;
+    }
+    pins[0].component->reset(pins[0].other_pin);
+}
+
 nts::Tristate nts::OutputComponent::compute(std::size_t pin)
 {
     if (pin != 1)

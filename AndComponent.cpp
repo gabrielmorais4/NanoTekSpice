@@ -17,7 +17,17 @@ nts::AndComponent::~AndComponent()
 {
 }
 
-nts :: Tristate nts::AndComponent::compute(std :: size_t pin)
+void nts::AndComponent::reset(std::size_t pin)
+{
+    visited = false;
+    if (pin == 1 || pin == 2) {
+        pins[pin - 1].component->reset(pins[pin - 1].other_pin);
+    }
+    pins[0].component->reset(pins[0].other_pin);
+    pins[1].component->reset(pins[1].other_pin);
+}
+
+nts::Tristate nts::AndComponent::compute(std :: size_t pin)
 {
     if (pin == 1 || pin == 2) {
         return pins[pin - 1].component->compute(pins[pin - 1].other_pin);

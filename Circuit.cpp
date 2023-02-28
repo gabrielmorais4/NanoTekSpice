@@ -32,6 +32,12 @@ nts::IComponent *Circuit::getComp(const std::string &name) const
     }
 }
 
+void Circuit::reset(std::size_t pin)
+{
+    visited = false;
+    pins[pin - 1].component->reset(pins[pin - 1].other_pin);
+}
+
 nts::Tristate Circuit::compute(std::size_t pin)
 {
     return pins[pin - 1].component->compute(pins[pin - 1].other_pin);

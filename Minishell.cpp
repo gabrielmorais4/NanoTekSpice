@@ -102,8 +102,10 @@ std::string extractValue(const std::string &value)
 void Minishell::reinitVisited(Circuit &myCircuit)
 {
     for (auto it = myCircuit.getMap()->begin(); it != myCircuit.getMap()->end(); it++){
-        std::cout << it->first << std::endl;
-        it->second->setVisited(false);
+        nts::OutputComponent *component = dynamic_cast<nts::OutputComponent *>(it->second.get());
+        if (component) {
+            component->reset(1);
+        }
     }
 }
 
@@ -131,7 +133,7 @@ void Minishell::display(Circuit &myCircuit)
                 std::cout << "  " << it->first << ": " << val << std::endl;
         }
     }
-    // reinitVisited(myCircuit);
+    reinitVisited(myCircuit);
 }
 
 void Minishell::simulate(Circuit &myCircuit)

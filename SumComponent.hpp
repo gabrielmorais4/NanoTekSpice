@@ -16,6 +16,7 @@ namespace nts
             SumComponent();
             ~SumComponent();
             nts::Tristate compute(std::size_t pin);
+            void reset(std::size_t pin);
 
         protected:
         private:

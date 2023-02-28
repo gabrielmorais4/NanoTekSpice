@@ -27,6 +27,7 @@ class Circuit : public nts::AComponent {
         size_t getTick() const { return tick; };
         void setTick(size_t new_tick) { tick = new_tick; };
         nts::Tristate compute(std::size_t pin);
+        void reset(std::size_t pin);
 
     protected:
         size_t tick = 0;

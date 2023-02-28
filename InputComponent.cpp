@@ -18,6 +18,13 @@ nts::InputComponent::~InputComponent()
 {
 }
 
+void nts::InputComponent::reset(std::size_t pin)
+{
+    if (pin != 1)
+        throw std::invalid_argument("Pin doesn't exist");
+    visited = false;
+}
+
 nts::Tristate nts::InputComponent::compute(std::size_t pin)
 {
     if (pin != 1)
