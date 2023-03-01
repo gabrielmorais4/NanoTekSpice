@@ -16,7 +16,7 @@ nts::OrComponent::OrComponent()
 void nts::OrComponent::reset(std::size_t pin)
 {
     if (visited == false && pin == 3) {
-        return;;
+        return;
     }
     visited = false;
     if (pin == 1 || pin == 2) {
@@ -28,7 +28,7 @@ void nts::OrComponent::reset(std::size_t pin)
 
 nts::Tristate nts::OrComponent::compute(std::size_t pin)
 {
-    if (visited && pin == 3) {
+    if (visited) {
         return (last_state);
     }
     if (pin == 1 || pin == 2) {
@@ -41,10 +41,10 @@ nts::Tristate nts::OrComponent::compute(std::size_t pin)
         last_state = True;
         return True;
     }
-    if (val1 == False || val2 == False) {
-        last_state = False;
-        return False;
+    if (val1 == Undefined || val2 == Undefined) {
+        last_state = Undefined;
+        return Undefined;
     }
-    last_state = Undefined;
-    return Undefined;
+    last_state = False;
+    return False;
 }

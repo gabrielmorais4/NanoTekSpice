@@ -32,7 +32,7 @@ namespace nts
 
         protected:
             std::vector<nts::node> pins;
-            bool visited;
+            bool visited = false;
             Tristate last_state = Undefined;
         private:
     };
