@@ -27,6 +27,7 @@
 #include "Circuit.hpp"
 #include "SumComponent.hpp"
 #include "LoggerComponent.hpp"
+#include "4512Component.hpp"
 class Parser {
     public:
         Parser(const std::string &file);
