@@ -25,8 +25,11 @@ void Circuit::addComp(const std::string &name, std::unique_ptr<nts::IComponent> 
 nts::IComponent *Circuit::getComp(const std::string &name) const
 {
     try {
-        auto res = map.at(name).get();
-        return res;
+        if (map.find(name) != map.end()) {
+            auto res = map.at(name).get();
+            return res;
+        }
+        return nullptr;
     } catch (std::exception &e) {
         exit (84);
     }

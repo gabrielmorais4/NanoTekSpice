@@ -146,8 +146,12 @@ void Minishell::simulate(Circuit &myCircuit)
     }
     for(auto &it : *myCircuit.getMap()) {
         nts::ClockComponent *clock = dynamic_cast<nts::ClockComponent *>(myCircuit.getComp(it.first));
+        nts::LoggerComponent *logger = dynamic_cast<nts::LoggerComponent *>(myCircuit.getComp(it.first));
         if (clock && mapAssign.find(it.first) == mapAssign.end()) {
             clock->simulate(myCircuit.getTick());
+        }
+        if (logger && mapAssign.find(it.first) == mapAssign.end()) {
+            logger->simulate(0);
         }
     }
     mapAssign.clear();

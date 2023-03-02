@@ -13,6 +13,7 @@
 #include "TrueComponent.hpp"
 #include "FalseComponent.hpp"
 #include "ClockComponent.hpp"
+#include "LoggerComponent.hpp"
 #include <map>
 #include <iostream>
 #include <memory>

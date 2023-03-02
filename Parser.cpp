@@ -65,6 +65,7 @@ Parser::Parser(const std::string &file)
     functs.insert({"4071", [](){ return create4071(); }});
     functs.insert({"4081", [](){ return create4081(); }});
     functs.insert({"4008", [](){ return create4008(); }});
+    functs.insert({"logger", [](){ return std::make_unique<nts::LoggerComponent>(); }});
 
     if (chipsets.empty() || links.empty())
         exit(84);
