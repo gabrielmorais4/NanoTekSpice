@@ -58,6 +58,7 @@ Parser::Parser(const std::string &file)
     functs.insert({"false", [](){ return std::make_unique<nts::FalseComponent>(); }});
     functs.insert({"true", [](){ return std::make_unique<nts::TrueComponent>(); }});
     functs.insert({"sum", [](){ return std::make_unique<nts::SumComponent>(); }});
+    functs.insert({"4512", [](){ return std::make_unique<nts::Component4512>(); }});
     functs.insert({"4069", [](){ return create4069(); }});
     functs.insert({"4001", [](){ return create4001(); }});
     functs.insert({"4011", [](){ return create4011(); }});

@@ -26,6 +26,7 @@
 #include "InputComponent.hpp"
 #include "Circuit.hpp"
 #include "SumComponent.hpp"
+#include "4512Component.hpp"
 class Parser {
     public:
         Parser(const std::string &file);
