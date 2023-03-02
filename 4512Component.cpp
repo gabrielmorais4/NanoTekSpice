@@ -25,8 +25,6 @@ nts::Tristate nts::Component4512::compute(std::size_t pin)
     int c = pins[12].component->compute(pins[12].other_pin);
     int inhibit = pins[9].component->compute(pins[9].other_pin);
     int oe = pins[14].component->compute(pins[14].other_pin);
-    std::cout << "inhibit: " << inhibit << std::endl;
-    std::cout << "oe: " << oe << std::endl;
     if (c == False && b == False && a == False && inhibit == False && oe == False) {
         return pins[0].component->compute(pins[0].other_pin);
     } else if (c == False && b == False && a == True && inhibit == False && oe == False) {
