@@ -29,6 +29,10 @@ nts::Tristate nts::LoggerComponent::compute(std::size_t pin)
         return Undefined;
     unsigned char val = 0;
     for (int i = 0; i < 8; i++) {
+        if (pins[i].component->compute(pins[i].other_pin) == Undefined)
+            return Undefined;
+    }
+    for (int i = 0; i < 8; i++) {
         val |= pins[i].component->compute(pins[i].other_pin) << (7 - i);
     }
     char c = static_cast<char>(val);
