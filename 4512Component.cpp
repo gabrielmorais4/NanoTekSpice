@@ -40,7 +40,7 @@ nts::Tristate nts::Component4512::compute(std::size_t pin)
     } else if (c == True && b == True && a == False && inhibit == False && oe == False) {
         return pins[6].component->compute(pins[6].other_pin);
     } else if (c == True && b == True && a == True && inhibit == False && oe == False) {
-        return pins[7].component->compute(pins[7].other_pin);
+        return pins[8].component->compute(pins[8].other_pin);
     } else if (inhibit == True && oe == False) {
         return False;
     } else if (oe == True) {
