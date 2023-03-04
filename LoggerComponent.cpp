@@ -27,18 +27,16 @@ nts::Tristate nts::LoggerComponent::compute(std::size_t pin)
     nts::Tristate clockVal = pins[8].component->compute(pins[8].other_pin);
     if (inhibitVal != False || clockVal != True)
         return Undefined;
-    unsigned char val = 0;
-    for (int i = 0; i < 8; i++) {
-        if (pins[i].component->compute(pins[i].other_pin) == Undefined)
-            return Undefined;
+    char binary = 0;
+    for (int i = 0; i <= 8; i++) {
+        nts::Tristate state = pins[i].component->compute(1);
+        if (state == Undefined)
+            return nts::Undefined;
+        binary |= (state == True ? 1 : 0) << (i);
     }
-    for (int i = 0; i < 8; i++) {
-        val |= pins[i].component->compute(pins[i].other_pin) << (7 - i);
-    }
-    char c = static_cast<char>(val);
     std::ofstream file;
-    file.open("./log.bin", std::ios::out | std::ios::app);
-    file << c;
+    file.open("./log.bin", std::ios::app);
+    file.put(binary);
     file.close();
     return Undefined;
 }
