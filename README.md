@@ -17,7 +17,7 @@ make
 ## Usage
 
 ```bash
-./nanotekspice <file_name> [<input=value> ...]
+./nanotekspice <file_name>
 ```
 
 Available commands :
@@ -27,7 +27,6 @@ Available commands :
 * `input=value` : changes the value of an input. This does not apply to `Clock`, `False` and `True`.
 * `simulate` : runs the simulation.
 * `loop` : continuously runs the simulation until SIGINT is received.
-* `dump` : prints detailed information about the simulation.
 
 ## Circuits
 
